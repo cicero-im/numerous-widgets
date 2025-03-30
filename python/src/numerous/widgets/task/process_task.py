@@ -13,6 +13,7 @@ from threading import Thread
 from typing import IO, Any
 
 from numerous.widgets.base.task import Task as TaskWidget
+from security import safe_command
 
 
 class ProcessTask:
@@ -477,8 +478,7 @@ def run_in_subprocess(  # noqa: PLR0915, C901, PLR0912
             preexec_fn = None  # type: ignore[assignment]
 
         # Start process
-        process = subprocess.Popen(  # noqa: S603
-            cmd,
+        process = safe_command.run(subprocess.Popen, cmd,
             stdout=subprocess.PIPE,
             stderr=subprocess.PIPE,
             shell=shell,
