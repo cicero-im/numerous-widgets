@@ -1,7 +1,6 @@
 """Module providing a stress test for the Numerous projects module."""
 
 import logging
-import random
 import time
 from datetime import datetime
 from typing import Any
@@ -13,6 +12,7 @@ from numerous.widgets.numerous.projects import (
     save_project,
     save_scenario,
 )
+import secrets
 
 
 # Configuration
@@ -40,7 +40,7 @@ def generate_random_text(length: int = 100) -> str:
         "ut",
         "labore",
     ]
-    return " ".join(random.choices(words, k=length))  # noqa: S311
+    return " ".join(secrets.SystemRandom().choices(words, k=length))  # noqa: S311
 
 
 def create_test_document(doc_id: int) -> dict[str, Any]:
@@ -52,8 +52,7 @@ def create_test_document(doc_id: int) -> dict[str, Any]:
             "type": "text",
             "created": datetime.now().isoformat(),
             "version": 1,
-            "tags": random.sample(
-                ["important", "draft", "final", "review", "archived"], 2
+            "tags": secrets.SystemRandom().sample(["important", "draft", "final", "review", "archived"], 2
             ),
         },
     }
