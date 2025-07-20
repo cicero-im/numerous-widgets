@@ -1,4 +1,5 @@
 import marimo
+import secrets
 
 __generated_with = "0.11.14"
 app = marimo.App(width="medium")
@@ -75,11 +76,11 @@ def _(aw, datetime, timedelta, wi):
 
         for _ in range(hours):
             # Base wind with some small variations
-            wind = base_speed + random.uniform(-3, 3)
+            wind = base_speed + secrets.SystemRandom().uniform(-3, 3)
 
             # Occasional gusts
-            if random.random() < 0.2:  # 20% chance of a gust
-                wind += random.uniform(0, max_speed - base_speed)
+            if secrets.SystemRandom().random() < 0.2:  # 20% chance of a gust
+                wind += secrets.SystemRandom().uniform(0, max_speed - base_speed)
 
             # Ensure non-negative
             wind = max(0, wind)
@@ -98,14 +99,14 @@ def _(aw, datetime, timedelta, wi):
 
             # Higher consumption during day hours
             if 8 <= hour_of_day <= 18:  # Daytime hours
-                power = base_load + random.uniform(50, peak_load - base_load)
+                power = base_load + secrets.SystemRandom().uniform(50, peak_load - base_load)
             elif 19 <= hour_of_day <= 22:  # Evening hours - highest consumption
-                power = peak_load - random.uniform(0, 100)
+                power = peak_load - secrets.SystemRandom().uniform(0, 100)
             else:  # Night hours - lowest consumption
-                power = base_load - random.uniform(0, base_load * 0.5)
+                power = base_load - secrets.SystemRandom().uniform(0, base_load * 0.5)
 
             # Add some random variation
-            power *= random.uniform(0.95, 1.05)
+            power *= secrets.SystemRandom().uniform(0.95, 1.05)
 
             power_data.append(round(power, 1))
 
@@ -230,9 +231,9 @@ def _(aw, datetime, timedelta, wi):
         ]
 
         # Generate some additional data for a new channel
-        solar_power_data_yesterday = [random.uniform(0, 5) for _ in range(24)]
-        solar_power_data_today = [random.uniform(0, 8) for _ in range(24)]
-        solar_power_data_tomorrow = [random.uniform(0, 10) for _ in range(24)]
+        solar_power_data_yesterday = [secrets.SystemRandom().uniform(0, 5) for _ in range(24)]
+        solar_power_data_today = [secrets.SystemRandom().uniform(0, 8) for _ in range(24)]
+        solar_power_data_tomorrow = [secrets.SystemRandom().uniform(0, 10) for _ in range(24)]
 
         # Add this data to the blocks
         blocks[0]["data"]["solar"] = solar_power_data_yesterday
